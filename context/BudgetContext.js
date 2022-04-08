@@ -15,56 +15,57 @@ export const BudgetProvider = ({ children }) => {
     const [ expenses, setExpense ] = useState([])
 
     function getBudgetExpenses(budgetId){
-        return expenses.filter(expense => expense.budgetId === budgetId)
+        // return expenses.filter(expense => expense.budgetId === budgetId)
+        return expenses
     }
 
     const addExpense = async ({ description, amount, budgetId }) => {
-        try {            
-            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/expenses`, {
-                method: 'POST',
-                body: JSON.stringify({ id: uuidV4(), description, amount, budgetId}),
-                headers: { 'Content-Type': 'application/json' },
-            });
-            const newExpense = await res.json();
-            setExpense(prevExpenses => {
-                return [...prevExpenses, newExpense]
-            })
-        } catch (err) {
-            console.error(err);
-        }
+        // try {            
+        //     const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/expenses`, {
+        //         method: 'POST',
+        //         body: JSON.stringify({ id: uuidV4(), description, amount, budgetId}),
+        //         headers: { 'Content-Type': 'application/json' },
+        //     });
+        //     const newExpense = await res.json();
+        //     setExpense(prevExpenses => {
+        //         return [...prevExpenses, newExpense]
+        //     })
+        // } catch (err) {
+        //     console.error(err);
+        // }
         
     }
 
     const addBudget = async ({ name, max }) => {
 
-        try {
-            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/budgets`, {
-                method: 'POST',
-                body: JSON.stringify({ id: uuidV4(), name, max}),
-                headers: { 'Content-Type': 'application/json' },
-            });
-            const newBudget = await res.json();
-            setBudget(prevBudgets => {
-                if(prevBudgets.find(budget => budget.name === name)){
-                    return prevBudgets
-                }
-                return [...prevBudgets, newBudget]
-            })
-        } catch (err) {
-            console.error(err);
-        }
+        // try {
+        //     const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/budgets`, {
+        //         method: 'POST',
+        //         body: JSON.stringify({ id: uuidV4(), name, max}),
+        //         headers: { 'Content-Type': 'application/json' },
+        //     });
+        //     const newBudget = await res.json();
+        //     setBudget(prevBudgets => {
+        //         if(prevBudgets.find(budget => budget.name === name)){
+        //             return prevBudgets
+        //         }
+        //         return [...prevBudgets, newBudget]
+        //     })
+        // } catch (err) {
+        //     console.error(err);
+        // }
     };
 
     function deleteExpense({ id }){
-        setExpense(prevExpenses => {
-            return prevExpenses.filter(expense => expense.id !== id)
-        })
+        // setExpense(prevExpenses => {
+        //     return prevExpenses.filter(expense => expense.id !== id)
+        // })
     }
 
     function deleteBudget({ id }){
-        setBudget(prevBudgets => {
-            return prevBudgets.filter(budget => budget.id !== id)
-        })
+        // setBudget(prevBudgets => {
+        //     return prevBudgets.filter(budget => budget.id !== id)
+        // })
     }
 
 
