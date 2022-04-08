@@ -107,7 +107,7 @@ export default function Home({ budgetsFromDb, expensesFromDb }) {
         <TotalBudgetCard /> */}
       </div>
     </Container>
-    {/* <AddBudgetModal 
+    <AddBudgetModal 
       show={showAddBudget} 
       handleClose={() => handleShowAddBudget(false)}         
     />
@@ -119,7 +119,7 @@ export default function Home({ budgetsFromDb, expensesFromDb }) {
      <ViewExpensesModal 
       budgetId={viewExpensesModalBudgetId} 
       handleClose={() => handleViewExpensesModalBudgetId()}         
-    /> */}
+    />
     </>
   )
 }
