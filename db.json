@@ -1,0 +1,138 @@
+{
+  "budgets": [
+    {
+      "id": "1",
+      "name": "Entertainment",
+      "max": 2000
+    },
+    {
+      "id": "2",
+      "name": "Comida",
+      "max": 20000
+    },
+    {
+      "id": "3",
+      "name": "Auto",
+      "max": 3000
+    },
+    {
+      "id": "5",
+      "name": "Servicios",
+      "max": 20000
+    },
+    {
+      "id": "6",
+      "name": "Tenis",
+      "max": 5000
+    },
+    {
+      "id": "67c9ccce-0ad6-433a-be20-5abbe4927bd8",
+      "name": "Test",
+      "max": 20000
+    },
+    {
+      "id": "3f827fd3-33af-4d03-82cb-93817824059d",
+      "name": "Seguro Auto",
+      "max": 8000
+    },
+    {
+      "id": "de650fd8-d923-4d94-bce9-ac0b9d9c9ec0",
+      "name": "Seguro Casa",
+      "max": 3500
+    },
+    {
+      "id": "187aee76-128a-493c-8904-31f5134efaee",
+      "name": "Falopa",
+      "max": 30000000
+    },
+    {
+      "id": "013fd6e1-c986-4b25-98c9-fe8cb90bdf12",
+      "name": "sads",
+      "max": null
+    },
+    {
+      "id": "da9a7796-b0e1-4005-9862-468eb7c36ad7",
+      "name": "Plata para comida",
+      "max": 250000
+    },
+    {
+      "id": "c01131ae-e718-4a50-b921-021583d4b74f",
+      "name": "Prueba PC",
+      "max": 20000
+    }
+  ],
+  "expenses": [
+    {
+      "id": "5f4bba90-2d88-46f1-9447-641c777f2200",
+      "description": "Casino",
+      "amount": 500,
+      "budgetId": "1"
+    },
+    {
+      "id": "0425c0a6-e0da-429d-8cde-dbbc928084b9",
+      "description": "Casino",
+      "amount": 500,
+      "budgetId": "1"
+    },
+    {
+      "id": "c2fc2a0c-a43c-4c82-9d43-2ae05737e73b",
+      "description": "Seguro",
+      "amount": 200,
+      "budgetId": "de650fd8-d923-4d94-bce9-ac0b9d9c9ec0"
+    },
+    {
+      "id": "71f55f95-163f-46fb-b2bf-3db38a9f2245",
+      "description": "Novia",
+      "amount": 600,
+      "budgetId": "1"
+    },
+    {
+      "id": "77ae8d07-4166-4020-b160-539cbc476e0d",
+      "description": "Nose que",
+      "amount": 400,
+      "budgetId": "Uncategorized"
+    },
+    {
+      "id": "fded9b8f-4fda-474b-bcb8-b01c7ebcca3c",
+      "description": "fasito",
+      "amount": 250000000,
+      "budgetId": "187aee76-128a-493c-8904-31f5134efaee"
+    },
+    {
+      "id": "c0b7424e-d34c-43e7-af87-8969eff86a94",
+      "description": "LL :D",
+      "amount": 9,
+      "budgetId": "2"
+    },
+    {
+      "id": "7a858ecd-f854-4096-b250-4548b4c07b02",
+      "description": "Prueba 1",
+      "amount": 200,
+      "budgetId": "1"
+    },
+    {
+      "id": "95f6496f-4f08-468b-a7fa-ab45fde4b159",
+      "description": "Prueba 2",
+      "amount": 100,
+      "budgetId": "1"
+    },
+    {
+      "id": "053965ff-b2bb-4dd6-af8f-6f82c90228c6",
+      "description": "Prueba 3",
+      "amount": 134,
+      "budgetId": "1"
+    },
+    {
+      "id": "c83c93f4-865e-4d31-aaee-fc46109a9844",
+      "description": "Prueba 3",
+      "amount": 233,
+      "budgetId": "1"
+    },
+    {
+      "id": "c0a5ea14-0ca1-417a-ac85-cebe937e1bb3",
+      "description": "salchichas",
+      "amount": 250,
+      "budgetId": "da9a7796-b0e1-4005-9862-468eb7c36ad7"
+    }
+  ]
+}
