@@ -13,7 +13,7 @@ const ViewExpensesModal = ({ budgetId, handleClose }) => {
     const expenses = getBudgetExpenses(budgetId)
 
     const deleteBudgetConfirmModal = () => {
-        alert("hola")
+        alert("Delete Budget in coming")
     }
 
     return ( 
