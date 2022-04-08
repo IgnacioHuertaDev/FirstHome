@@ -100,14 +100,14 @@ export default function Home({ budgetsFromDb, expensesFromDb }) {
             )
           })
         } */}
-        <UncategorizedBudgetCard 
+        {/* <UncategorizedBudgetCard 
           onAddExpenseClick={() => openAddExpenseModal(UNCATEGORIZED_BUDGET_ID)} 
           onViewExpenseClick={() => handleViewExpensesModalBudgetId(UNCATEGORIZED_BUDGET_ID)}
         />
-        <TotalBudgetCard />
+        <TotalBudgetCard /> */}
       </div>
     </Container>
-    <AddBudgetModal 
+    {/* <AddBudgetModal 
       show={showAddBudget} 
       handleClose={() => handleShowAddBudget(false)}         
     />
@@ -119,7 +119,7 @@ export default function Home({ budgetsFromDb, expensesFromDb }) {
      <ViewExpensesModal 
       budgetId={viewExpensesModalBudgetId} 
       handleClose={() => handleViewExpensesModalBudgetId()}         
-    />
+    /> */}
     </>
   )
 }
