@@ -82,7 +82,7 @@ export default function Home({ budgetsFromDb, expensesFromDb }) {
           alignItems: "flex-start"
           }}
       >        
-        {
+        {/* {
           //List of Budgets
           budgets.map(budget => {
             const amount = getBudgetExpenses(budget.id).reduce((total, expense) => total + expense.amount, 0)
@@ -99,7 +99,7 @@ export default function Home({ budgetsFromDb, expensesFromDb }) {
               />
             )
           })
-        }
+        } */}
         <UncategorizedBudgetCard 
           onAddExpenseClick={() => openAddExpenseModal(UNCATEGORIZED_BUDGET_ID)} 
           onViewExpenseClick={() => handleViewExpensesModalBudgetId(UNCATEGORIZED_BUDGET_ID)}
