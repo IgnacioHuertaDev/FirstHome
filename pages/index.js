@@ -127,11 +127,11 @@ export default function Home({ budgetsFromDb, expensesFromDb }) {
 //This gets called on every request
 export async function getServerSideProps() {
   // Get all budgets
-  const budgetsRes = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/budgets`)
+  const budgetsRes = await fetch(`https://first-home-app.herokuapp.com/budgets`)
   const budgetsFromDb = await budgetsRes.json()
 
   // Get all expenses
-  const expensesRes = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/expenses`)
+  const expensesRes = await fetch(`https://first-home-app.herokuapp.com/expenses`)
   const expensesFromDb = await expensesRes.json()
 
   // Pass data to the page via props
