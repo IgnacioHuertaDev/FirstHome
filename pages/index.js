@@ -127,11 +127,11 @@ export default function Home({ budgetsFromDb, expensesFromDb }) {
 //This gets called on every request
 export async function getServerSideProps() {
   // Get all budgets
-  const budgetsRes = await fetch(`http://localhost:4000/budgets`)
+  const budgetsRes = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/budgets`)
   const budgetsFromDb = await budgetsRes.json()
 
   // Get all expenses
-  const expensesRes = await fetch(`http://localhost:4000/expenses`)
+  const expensesRes = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/expenses`)
   const expensesFromDb = await expensesRes.json()
 
   // Pass data to the page via props
