@@ -20,7 +20,7 @@ export const BudgetProvider = ({ children }) => {
 
     const addExpense = async ({ description, amount, budgetId }) => {
         try {            
-            const res = await fetch(`https://first-home-app.herokuapp.com/expenses`, {
+            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/expenses`, {
                 method: 'POST',
                 body: JSON.stringify({ id: uuidV4(), description, amount, budgetId}),
                 headers: { 'Content-Type': 'application/json' },
@@ -36,7 +36,7 @@ export const BudgetProvider = ({ children }) => {
 
     const addBudget = async ({ name, max }) => {
         try {
-            const res = await fetch(`https://first-home-app.herokuapp.com/budgets`, {
+            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/budgets`, {
                 method: 'POST',
                 body: JSON.stringify({ id: uuidV4(), name, max}),
                 headers: { 'Content-Type': 'application/json' },
