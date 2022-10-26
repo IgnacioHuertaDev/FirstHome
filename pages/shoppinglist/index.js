@@ -89,7 +89,7 @@ export default function ShoppingLists({ shoppingListsFromDb }) {
 //This gets called on every request
 export async function getServerSideProps() {
   // Get all shopping lists
-  const shoppingListsRes = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/shoppingLists`)
+  const shoppingListsRes = await fetch(`/api/shoppingLists`)
   const shoppingListsFromDb = await shoppingListsRes.json()
 
   // Pass data to the page via props

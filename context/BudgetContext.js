@@ -23,7 +23,7 @@ export const BudgetProvider = ({ children }) => {
 
     const addExpense = async ({ description, amount, budgetId }) => {
         try {            
-            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/expenses`, {
+            const res = await fetch(`/api/expenses`, {
                 method: 'POST',
                 body: JSON.stringify({ id: uuidV4(), description, amount, budgetId}),
                 headers: { 'Content-Type': 'application/json' },
@@ -39,7 +39,7 @@ export const BudgetProvider = ({ children }) => {
 
     const addBudget = async ({ name, max, budgetColor }) => {
         try {
-            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/budgets`, {
+            const res = await fetch(`/api/budgets`, {
                 method: 'POST',
                 body: JSON.stringify({ _id: uuidV4(), name, max, budgetColor}),
                 headers: { 'Content-Type': 'application/json' },
