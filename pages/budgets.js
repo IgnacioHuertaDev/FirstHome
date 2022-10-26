@@ -8,6 +8,7 @@ import UncategorizedBudgetCard from 'components/UncategorizedBudgetCard'
 import TotalBudgetCard from 'components/TotalBudgetCard'
 import { UNCATEGORIZED_BUDGET_ID, useBudgets } from 'context/BudgetContext'
 import useTranslation from 'next-translate/useTranslation'
+import clientPromise from "lib/mongodb";
 
 export default function Budgets({ budgetsFromDb }) {
 
@@ -60,7 +61,7 @@ export default function Budgets({ budgetsFromDb }) {
         {
           //List of Budgets
           budgets.map(budget => {
-            const amount = getBudgetExpenses(budget._id).reduce((total, expense) => total + expense.amount, 0)
+            const amount = budget.expenses.reduce((total, expense) => total + expense.amount, 0)
 
             return (
               <BudgetCard
@@ -99,12 +100,20 @@ export default function Budgets({ budgetsFromDb }) {
   )
 }
 
-//This gets called on every request
 export async function getServerSideProps() {
-  // Get all budgets
-  const budgetsRes = await fetch(`/api/budgets`)
-  const budgetsFromDb = await budgetsRes.json()
+  try {
+      const client = await clientPromise;
+      const db = client.db("first_home");
 
-  // Pass data to the page via props
-  return { props: { budgetsFromDb } }
+      const budgets = await db
+        .collection("budgets")
+        .find({})
+        .toArray();
+      console.log(budgets)
+      return {
+          props: { budgetsFromDb: JSON.parse(JSON.stringify(budgets)) },
+      };
+  } catch (e) {
+      console.error(e);
+  }
 }
