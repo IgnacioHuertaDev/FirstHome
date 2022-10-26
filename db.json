@@ -3,62 +3,92 @@
     {
       "id": "1",
       "name": "Entertainment",
-      "max": 2000
+      "max": 3000,
+      "budgetColor": "#3fbf57"
     },
     {
       "id": "2",
       "name": "Comida",
-      "max": 20000
+      "max": 20000,
+      "budgetColor": "#3fbf57"
     },
     {
       "id": "3",
       "name": "Auto",
-      "max": 3000
+      "max": 3000,
+      "budgetColor": "#3fbf57"
     },
     {
       "id": "5",
       "name": "Servicios",
-      "max": 20000
+      "max": 20000,
+      "budgetColor": "#be4bdb"
     },
     {
       "id": "6",
       "name": "Tenis",
-      "max": 5000
+      "max": 5000,
+      "budgetColor": "#12b886"
     },
     {
       "id": "67c9ccce-0ad6-433a-be20-5abbe4927bd8",
       "name": "Test",
-      "max": 20000
+      "max": 20000,
+      "budgetColor": "#3fbf57"
     },
     {
       "id": "3f827fd3-33af-4d03-82cb-93817824059d",
       "name": "Seguro Auto",
-      "max": 8000
+      "max": 8000,
+      "budgetColor": "#3fbf57"
     },
     {
       "id": "de650fd8-d923-4d94-bce9-ac0b9d9c9ec0",
       "name": "Seguro Casa",
-      "max": 3500
+      "max": 3500,
+      "budgetColor": "#fab005"
     },
     {
       "id": "187aee76-128a-493c-8904-31f5134efaee",
       "name": "Falopa",
-      "max": 30000000
-    },
-    {
-      "id": "013fd6e1-c986-4b25-98c9-fe8cb90bdf12",
-      "name": "sads",
-      "max": null
+      "max": 30000000,
+      "budgetColor": "#e64980"
     },
     {
       "id": "da9a7796-b0e1-4005-9862-468eb7c36ad7",
       "name": "Plata para comida",
-      "max": 250000
+      "max": 250000,
+      "budgetColor": "#12b886"
     },
     {
       "id": "c01131ae-e718-4a50-b921-021583d4b74f",
       "name": "Prueba PC",
-      "max": 20000
+      "max": 20000,
+      "budgetColor": "#12b886"
+    },
+    {
+      "id": "42d236f6-1127-4e73-8ba8-f4ac9891ae30",
+      "name": "Test color",
+      "max": 2000,
+      "budgetColor": "#e64980"
+    },
+    {
+      "id": "d403d460-0ab7-4c5f-b37e-dffefa760e1a",
+      "name": "Prueba mantine",
+      "max": 20000,
+      "budgetColor": "#fa5252"
+    },
+    {
+      "id": "217ca888-75bd-4770-a35c-fff4880574de",
+      "name": "Gasto Seguros",
+      "max": 5000,
+      "budgetColor": "#4c6ef5"
+    },
+    {
+      "id": "076e1a66-7482-44d3-b3c6-6090023f5ba8",
+      "name": "Prueba color naranja",
+      "max": 14343,
+      "budgetColor": "#fd7e14"
     }
   ],
   "expenses": [
@@ -95,7 +125,7 @@
     {
       "id": "fded9b8f-4fda-474b-bcb8-b01c7ebcca3c",
       "description": "fasito",
-      "amount": 250000000,
+      "amount": 2500000,
       "budgetId": "187aee76-128a-493c-8904-31f5134efaee"
     },
     {
@@ -133,6 +163,114 @@
       "description": "salchichas",
       "amount": 250,
       "budgetId": "da9a7796-b0e1-4005-9862-468eb7c36ad7"
+    },
+    {
+      "id": "4eb71e4d-6589-4918-a5a4-9f5c09ec9707",
+      "amount": null
+    },
+    {
+      "id": "e15143e1-2dcf-44cc-9261-435f21156424",
+      "description": "Gasto de prueba",
+      "amount": 400,
+      "budgetId": "1"
+    },
+    {
+      "id": "ab20d600-9bf3-4f84-bf86-04dd75d9ddf8",
+      "description": "Prueba con santi",
+      "amount": 200,
+      "budgetId": "1"
+    },
+    {
+      "id": "7e76ee34-643c-4dcd-b49b-0cf91ec36b67",
+      "description": "Gasto fiambre",
+      "amount": 100,
+      "budgetId": "1"
+    }
+  ],
+  "shoppingLists": [
+    {
+      "id": "1",
+      "description": "Carrefour",
+      "date": "01/08/2022",
+      "closed": true
+    },
+    {
+      "id": "2",
+      "description": "Carrefour",
+      "date": "01/09/2022",
+      "closed": true
+    }
+  ],
+  "products": [
+    {
+      "id": "1",
+      "description": "Lata de atun",
+      "amount": 2,
+      "price": 200,
+      "shoppingListId": "1"
+    },
+    {
+      "id": "2",
+      "description": "Lata de choclo",
+      "amount": 4,
+      "price": 200,
+      "shoppingListId": "1"
+    },
+    {
+      "id": "3",
+      "description": "Lata de atun",
+      "amount": 2,
+      "price": 200,
+      "shoppingListId": "1"
+    },
+    {
+      "id": "4",
+      "description": "Lata de choclo",
+      "amount": 4,
+      "price": 200,
+      "shoppingListId": "1"
+    },
+    {
+      "id": "5",
+      "description": "Lata de atun",
+      "amount": 2,
+      "price": 200,
+      "shoppingListId": "1"
+    },
+    {
+      "id": "6",
+      "description": "Lata de choclo",
+      "amount": 4,
+      "price": 200,
+      "shoppingListId": "1"
+    },
+    {
+      "id": "7",
+      "description": "Lata de atun",
+      "amount": 2,
+      "price": 200,
+      "shoppingListId": "1"
+    },
+    {
+      "id": "8",
+      "description": "Lata de choclo",
+      "amount": 4,
+      "price": 200,
+      "shoppingListId": "1"
+    },
+    {
+      "id": "9",
+      "description": "Lata de atun",
+      "amount": 2,
+      "price": 200,
+      "shoppingListId": "1"
+    },
+    {
+      "id": "10",
+      "description": "Lata de choclo",
+      "amount": 4,
+      "price": 200,
+      "shoppingListId": "1"
     }
   ]
 }

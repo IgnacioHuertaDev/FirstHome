@@ -6,9 +6,12 @@ const BudgetContext = createContext();
 export const UNCATEGORIZED_BUDGET_ID = "Uncategorized"
 
 export function useBudgets() {
-    return useContext(BudgetContext)
+    const context = useContext(BudgetContext)
+    if(context === undefined)
+        throw new Error("useBudgets must be used within a BudgetProvider") 
+    return context
 }
-
+ 
 export const BudgetProvider = ({ children }) => {
 
     const [ budgets, setBudget ] = useState([])
@@ -20,7 +23,7 @@ export const BudgetProvider = ({ children }) => {
 
     const addExpense = async ({ description, amount, budgetId }) => {
         try {            
-            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/expenses`, {
+            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/expenses`, {
                 method: 'POST',
                 body: JSON.stringify({ id: uuidV4(), description, amount, budgetId}),
                 headers: { 'Content-Type': 'application/json' },
@@ -34,11 +37,11 @@ export const BudgetProvider = ({ children }) => {
         }        
     }
 
-    const addBudget = async ({ name, max }) => {
+    const addBudget = async ({ name, max, budgetColor }) => {
         try {
-            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/budgets`, {
+            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/budgets`, {
                 method: 'POST',
-                body: JSON.stringify({ id: uuidV4(), name, max}),
+                body: JSON.stringify({ _id: uuidV4(), name, max, budgetColor}),
                 headers: { 'Content-Type': 'application/json' },
             });
             const newBudget = await res.json();
@@ -59,9 +62,15 @@ export const BudgetProvider = ({ children }) => {
         })
     }
 
-    function deleteBudget({ id }){
+    function deleteAllExpensesByBudgetId({ budgetId }){
+        setExpense(prevExpenses => {
+            return prevExpenses.filter(expense => expense.budgetId !== budgetId)
+        })
+    }
+
+    function deleteBudget({ _id }){
         setBudget(prevBudgets => {
-            return prevBudgets.filter(budget => budget.id !== id)
+            return prevBudgets.filter(budget => budget._id !== _id)
         })
     }
 

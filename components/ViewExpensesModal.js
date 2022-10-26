@@ -1,14 +1,17 @@
-import { Modal, Text, Button, Grid, Card, Spacer } from "@nextui-org/react";
-import { UNCATEGORIZED_BUDGET_ID, useBudgets } from "../context/BudgetContext";
+import { Modal, Text, Button, SimpleGrid , Card, Box, ActionIcon, Tooltip } from '@mantine/core';
+import { UNCATEGORIZED_BUDGET_ID, useBudgets } from '../context/BudgetContext';
+import useTranslation from 'next-translate/useTranslation'
 import { currencyFormatter } from "../utils/currencyFormatter";
-import { Delete } from 'react-iconly'
+// import { Delete } from '@radix-ui/react-icons'
+import { Trash } from 'tabler-icons-react';
 
 const ViewExpensesModal = ({ budgetId, handleClose }) => {
     const { getBudgetExpenses, budgets, deleteBudget, deleteExpense } = useBudgets()
+    const {t} = useTranslation('common')
 
     const budget = UNCATEGORIZED_BUDGET_ID === budgetId 
-                            ? { id: UNCATEGORIZED_BUDGET_ID, name: "Uncategorized" } 
-                            : budgets.find(b => b.id === budgetId)
+                            ? { _id: UNCATEGORIZED_BUDGET_ID, name: "Uncategorized" } 
+                            : budgets.find(b => b._id === budgetId)
 
     const expenses = getBudgetExpenses(budgetId)
 
@@ -16,56 +19,38 @@ const ViewExpensesModal = ({ budgetId, handleClose }) => {
         alert("Delete Budget in coming")
     }
 
-    return ( 
+    return (
         <Modal
-        closeButton
-        aria-labelledby="modal-title"
-        open={budgetId != null}
+        title={`${t("EXPENSES")} ${budget?.name}`}
+        opened={budgetId != null}
         onClose={handleClose}
-        css={{height: "475px"}} 
-        autoMargin
+        centered
+        closeButtonLabel="Close add budget modal"
+        size="sm"
+        overflow="inside"
       >
-        <Modal.Header>
-          <Text id="modal-title" size={24}>
-            Expenses&nbsp;-&nbsp;
-            <Text b size={24} css={{textTransform: "capitalize"}}>
-              {budget?.name}
-            </Text>
-          </Text>          
-        </Modal.Header>
-        <Modal.Body>
-        <Grid.Container gap={1}>
-                {expenses.map(expense => (
-                    <Grid key={expense.id} xs={12}>
-                        <Card                              
-                            hoverable 
-                            bordered              
-                        >
-                            <Card.Body css={{ display: "flex", flexDirection: "row", justifyContent: "space-between", alignItems: "center" }}>
-                                <Text b size={16} css={{textTransform: "capitalize"}}>{expense.description}</Text>
-                                <div  style={{ display: "flex", flexDirection: "row", justifyContent: "space-between", alignItems: "center" }}>
-                                    <Text b size={16}>{currencyFormatter.format(expense.amount)}</Text>   
-                                    <Spacer />     
-                                    <Button
-                                        auto
-                                        color="error"
-                                        size="sm"
-                                        icon={<Delete size={22} />}
-                                    />                                                        
-                                </div>
-                            </Card.Body>
-                        </Card>
-                    </Grid>
-                ))}
-            </Grid.Container>
-        </Modal.Body>
-        <Modal.Footer>
-            {budgetId !== UNCATEGORIZED_BUDGET_ID && (
-                <Button auto bordered flat color="error" onClick={deleteBudgetConfirmModal}>
-                    Delete Budget
-                </Button>
-            )}
-        </Modal.Footer>
+        <SimpleGrid cols={1}>
+            {expenses.map(expense => (
+                <Box key={expense._id} xs={12}>
+                    <Card>
+                        <Box style={{ display: "flex", flexDirection: "row", justifyContent: "space-between", alignItems: "center" }}>
+                            <Text FontWeight={700} size={16} transform="capitalize">{expense.description}</Text>
+                            <div  style={{ display: "flex", flexDirection: "row", justifyContent: "space-between", alignItems: "center" }}>
+                                <Text FontWeight={700} size={16}>{currencyFormatter.format(expense.amount)}</Text>
+                                <Tooltip label={`${t("DELETE")} ${t("EXPENSE")}`} withArrow placement="end">
+                                    <ActionIcon ml="lg" color="red" variant="filled"><Trash size={16}/></ActionIcon>
+                                </Tooltip>     
+                            </div>
+                        </Box>
+                    </Card>
+                </Box>
+            ))}            
+        </SimpleGrid>
+        {budgetId !== UNCATEGORIZED_BUDGET_ID && (
+            <Button mt="lg" color="red" onClick={deleteBudgetConfirmModal}>
+                {t("DELETE")}&nbsp;{t("BUDGET")}
+            </Button>
+        )}
       </Modal>
      );
 }

@@ -1,27 +1,86 @@
-import { useRef } from "react";
-import { Modal, Text, Button, Input, Spacer, useInput } from "@nextui-org/react";
-import { useBudgets } from "../context/BudgetContext";
+import { useState } from "react";
+import { Modal, Box, TextInput, NumberInput, Button, Group } from '@mantine/core';
+import { useForm } from '@mantine/form';
+import { useBudgets } from '../context/BudgetContext';
+import useTranslation from 'next-translate/useTranslation'
+import ColorPicker from  '../components/ColorPicker'
 
 const AddBudgetModal = ({ show, handleClose }) => {
-    const nameRef = useRef()
-    const maxRef = useRef()
 
     const { addBudget } = useBudgets()
+    const { t } = useTranslation('common')
 
-    const handleSubmit = (e) => {
-        e.preventDefault()
+    const [primaryColor, setPrimaryColor] = useState('blue');
+
+    const handleSubmit = (values) => {
         addBudget(
         {
-            name: nameRef.current.value,
-            max: parseFloat(maxRef.current.value)
+            name: values.name,
+            max: parseFloat(values.maxSpending),
+            budgetColor: values.budgetColor
         })
         handleClose()
     }
 
-    // const { nameValue, nameReset, nameBindings } = useInput("");
-    // const { maxSpendingValue, maxSpendingreset, maxSpendingBindings } = useInput("");
+    const form = useForm({
+      initialValues: { name: '', maxSpending: 0, budgetColor: '#25262b' },
+      validate: (values) => ({
+        name: values.name.length < 3 ? t("NAME_ERROR") : null,
+        maxSpending:
+          values.maxSpending === undefined
+            ? t("MAXIMUN_SPENDING_REQUIRED")
+            : values.maxSpending <= 0
+            ? t("MAXIMUN_SPENDING_ERROR")
+            : null,
+      }),
+    });
+    
+    return ( 
+      <Modal
+        title={`${t("NEW_M")} ${t("BUDGET")}`}
+        opened={show}
+        onClose={handleClose}
+        centered
+        closeButtonLabel="Close add budget modal"
+        size="sm"
+      >
+        <Box sx={{ maxWidth: 340 }} mx="auto">
+              <form onSubmit={form.onSubmit((values) => handleSubmit(values))}>
+                <TextInput label={t("NAME_LABEL")} placeholder={t("NAME_LABEL")} {...form.getInputProps('name')} />
+                <NumberInput mt="sm" min={0} label={t("MAXIMUN_SPENDING_LABEL")} placeholder={t("MAXIMUN_SPENDING_LABEL")} {...form.getInputProps('maxSpending')} />
+                <ColorPicker mt="sm" mb="sm" defaultValue="#25262b" label={t("BUDGET_COLOR_LABEL")} placeholder={t("BUDGET_COLOR_PLACEHOLDER")} {...form.getInputProps('budgetColor')}/>
+                <Group position="right" mt="md">
+                  <Button color="red" onClick={handleClose}>
+                    {t("CLOSE")}
+                  </Button>
+                  <Button type="submit">
+                    {t("ADD")}
+                  </Button>
+                </Group>
+              </form>
+            </Box>
+      </Modal>
+     );
+}
+ 
+export default AddBudgetModal;
 
-    // const nameHelper = useMemo(() => {
+{/* <Input
+            clearable
+            bordered
+            required
+            ref={maxRef}
+            min={0}
+            step={0.01}
+            size="lg"
+            labelPlaceholder={t("MAXIMUN_SPENDING_LABEL")}
+            helperText="Please enter a maximun value greater than 0"
+            // helperColor={nameHelper.color}
+            type="number"
+            // contentLeft={<Password />}
+          /> */}
+
+ //const nameHelper = useMemo(() => {
     //     if (!nameValue)
     //       return {
     //         text: "",
@@ -46,68 +105,4 @@ const AddBudgetModal = ({ show, handleClose }) => {
     //     text: isValid ? "Correct email" : "Enter a valid email",
     //     color: isValid ? "success" : "error",
     //     };
-    // }, [value]);
-    
-    return ( 
-        <Modal
-        closeButton
-        aria-labelledby="modal-title"
-        open={show}
-        onClose={handleClose}
-        css={{height: "350px"}}
-        autoMargin
-      >
-        <Modal.Header>
-          <Text id="modal-title" size={24}>
-            New&nbsp;
-            <Text b size={24}>
-              Budget
-            </Text>
-          </Text>
-        </Modal.Header>
-        <form onSubmit={handleSubmit}>
-
-        </form>
-        <Modal.Body>
-          <Spacer y={0} />
-          <Input
-            clearable
-            bordered
-            required
-            ref={nameRef}
-            size="lg"
-            labelPlaceholder="Name"
-            // helperColor={nameHelper.color}
-            helperText="Please enter a name"
-            type="text"
-            // contentLeft={<Mail />}
-          />
-          <Spacer y={1} />
-          <Input
-            clearable
-            bordered
-            required
-            ref={maxRef}
-            min={0}
-            step={0.01}
-            size="lg"
-            labelPlaceholder="Maximun spending"
-            helperText="Please enter a maximun value greater than 0"
-            // helperColor={nameHelper.color}
-            type="number"
-            // contentLeft={<Password />}
-          />
-        </Modal.Body>
-        <Modal.Footer>
-          <Button auto flat color="error" onClick={handleClose}>
-            Close
-          </Button>
-          <Button auto onClick={handleSubmit}>
-            Add
-          </Button>
-        </Modal.Footer>
-      </Modal>
-     );
-}
- 
-export default AddBudgetModal;
+    // }, [value]);        
