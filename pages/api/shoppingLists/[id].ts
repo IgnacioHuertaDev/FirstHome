@@ -14,7 +14,7 @@ export default async (req: NextApiRequest, res: NextApiResponse<ShoppingList>) =
             case 'GET':
                 const shoppingList = await db
                 .collection("shoppingLists")
-                .findOne({_id : new ObjectId(id)});
+                .findOne({_id : new ObjectId(id?.toString())});
 
                 if(!shoppingList) 
                     return res.status(404)
