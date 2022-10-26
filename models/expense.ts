@@ -1,7 +1,7 @@
-type Expenses = {
+type Expense = {
     _id: string,
     description: string,
     amount: number
 }
 
-export default Expenses
+export default Expense

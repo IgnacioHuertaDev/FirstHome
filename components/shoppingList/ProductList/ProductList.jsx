@@ -44,7 +44,7 @@ const ProductList = ({ products }) => {
   const [productsState, handlers] = useListState(products)
 
   const items = productsState.map((product, index) => (
-    <Draggable key={product.id} index={index} draggableId={product.id}>
+    <Draggable key={product._id} index={index} draggableId={product._id}>
       {(provided, snapshot) => (
         <div
           className={cx(classes.item, { [classes.itemDragging]: snapshot.isDragging })}

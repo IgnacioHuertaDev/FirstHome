@@ -1,7 +1,22 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, Dispatch, FC, ReactNode, SetStateAction, useContext, useState } from "react";
+import useSWR from "swr"
 import { v4 as uuidV4 } from 'uuid'
+import { fetcher } from "lib/fetcher";
+import ShoppingList from "models/shoppingList";
+import Products from "models/product";
 
-const ShoppingListContext = createContext();
+export type ShoppingListContextType = {
+    shoppingLists: ShoppingList[];
+    setShoppingList: Dispatch<SetStateAction<ShoppingList[]>>
+    getShoppingList: (_id: string) => void
+    addShoppingList: (description: string, date: Date) => void
+    addProduct : (description: string, amount: number, price: number, shoppingListId: string) => void
+    updateShoppingList : (updatedShoppingList : ShoppingList) => void;
+    deleteShoppingList : (_id : string) => void;
+    deleteProduct : (_id: string) => void;
+  };
+
+const ShoppingListContext = createContext<ShoppingListContextType | null>(null);
 
 export function useShoppingList() {
     const context = useContext(ShoppingListContext)
@@ -10,41 +25,26 @@ export function useShoppingList() {
     return context
 }
  
-export const ShoppingListProvider = ({ children }) => {
+export const ShoppingListProvider : FC<ReactNode> = ({ children }) => {
 
-    const [ shoppingLists, setShoppingList ] = useState([])
-    const [ products, setProduct ] = useState([])
+    const [ shoppingLists, setShoppingList ] = useState<ShoppingList[]>([])
 
 
-    function getShoppingListProducts(shoppingListId){
-        return products.filter(product => product.shoppingListId === shoppingListId)
+
+    const getShoppingList = async (_id : string) => {
+        //const { data, error } = useSWR(`/api/shoppingLists/${_id}`, fetcher)
+        const res = await fetch(`/api/shoppingLists/${_id}`)
+        const data = await res.json()
+        console.log("context data", data)
+        const error = false
+        return {
+            data: data,
+            isLoading: !error && !data,
+            isError: error
+        }      
     }
 
-    const getShoppingListProductsByBD = async ({ shoppingListId }) => {
-        try {            
-            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/products/shoppingListId=${shoppingListId}`);
-            const products = await res.json()
-
-            return products;
-
-        } catch (err) {
-            console.error(err);
-        } 
-    }
-
-    const getShoppingListById = async ({ _id }) => {
-        try {            
-            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/shoppingLists/${_id}`);
-            const shoppingList = await res.json()
-            
-            return shoppingList;
-
-        } catch (err) {
-            console.error(err);
-        }        
-    }
-
-    const addShoppingList = async ({ description, date }) => {
+    const addShoppingList = async ( description: string, date: Date ) => {
         try {            
             const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/shoppingLists`, {
                 method: 'POST',
@@ -60,7 +60,7 @@ export const ShoppingListProvider = ({ children }) => {
         }        
     }
 
-    const addProduct = async ({ description, amount, price, shoppingListId }) => {
+    const addProduct = async (description: string, amount: number, price: number, shoppingListId: string) => {
         try {            
             const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/products`, {
                 method: 'POST',
@@ -68,15 +68,24 @@ export const ShoppingListProvider = ({ children }) => {
                 headers: { 'Content-Type': 'application/json' },
             });
             const newProduct = await res.json();
-            setProduct(prevProducts => {
-                return [...prevProducts, newProduct]
-            })
+
+            setShoppingList((prevShoppingLists) => {
+                const existingShoppingLists = [...prevShoppingLists];
+                const existingShoppingList = existingShoppingLists.find(
+                    (shoppingList) => shoppingList._id === shoppingListId
+                );
+                
+                if(existingShoppingList != null)
+                    existingShoppingList.products.push(newProduct)
+
+                return existingShoppingLists;
+            });
         } catch (err) {
             console.error(err);
         }        
     }
 
-    const updateShoppingList = async (updatedShoppingList) => {
+    const updateShoppingList = async (updatedShoppingList : ShoppingList) => {
         try {
             await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/shoppingLists/${updatedShoppingList._id}`, {
                 method: 'PUT',
@@ -92,9 +101,11 @@ export const ShoppingListProvider = ({ children }) => {
                     (shoppingList) => shoppingList._id === updatedShoppingList._id
                 );
 
-                existingShoppingList.description = updatedShoppingList.description
-                existingShoppingList.date = updatedShoppingList.date
-                existingShoppingList.closed = updatedShoppingList.closed
+                if(existingShoppingList != null){
+                    existingShoppingList.description = updatedShoppingList.description
+                    existingShoppingList.date = updatedShoppingList.date
+                    existingShoppingList.closed = updatedShoppingList.closed
+                }
 
                 return existingShoppingLists;
             });
@@ -103,33 +114,28 @@ export const ShoppingListProvider = ({ children }) => {
         }
     };
 
-    function deleteShoppingList({ _id }){
+    function deleteShoppingList(_id : string){
         setShoppingList(prevShoppingLists => {
             return prevShoppingLists.filter(shoppingList => shoppingList._id !== _id)
         })
     }
 
-    function deleteProduct({ _id }){
-        setProduct(prevProducts => {
-            return prevProducts.filter(product => product._id !== _id)
-        })
+    function deleteProduct(_id : string){
+        
     }
 
     return <ShoppingListContext.Provider value={{
-        shoppingLists,
-        products,
-        getShoppingListProducts,
-        getShoppingListProductsByBD,
-        getShoppingListById,
-        setShoppingList,
-        setProduct,
-        addShoppingList,
-        addProduct,
-        updateShoppingList,
-        deleteShoppingList,
-        deleteProduct
-    }}>
-    {children}</ShoppingListContext.Provider>
+            shoppingLists,
+            setShoppingList,
+            getShoppingList,        
+            addShoppingList,
+            addProduct,
+            updateShoppingList,
+            deleteShoppingList,
+            deleteProduct
+        }}>
+            {children}
+        </ShoppingListContext.Provider>
 }
 
 

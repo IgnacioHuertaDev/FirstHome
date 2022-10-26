@@ -3,6 +3,9 @@ import { currencyFormatter } from "utils/currencyFormatter"
 import useTranslation from 'next-translate/useTranslation';
 import { ArrowUpRight, ArrowDownRight } from 'tabler-icons-react';
 import Link from 'next/link';
+import dayjs from "dayjs";
+import customParseFormat from "dayjs/plugin/customParseFormat";
+dayjs.extend(customParseFormat);
 
 const useStyles = createStyles((theme) => ({
     root: {
@@ -39,6 +42,7 @@ const ShoppingListCard = ({shoppingListId, name, amount, date, diff }) => {
               transform="uppercase"
               weight={700}
               size="xs">
+              {/* {dayjs(date, "DD/MM/YYYY")} */}
               {date}
             </Text>
             <Text weight={700} size="xl">

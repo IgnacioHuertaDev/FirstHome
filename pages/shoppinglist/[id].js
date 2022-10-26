@@ -3,19 +3,36 @@ import useTranslation from 'next-translate/useTranslation'
 import { useRouter } from 'next/router'
 import { useShoppingList } from 'context/ShoppingListContext'
 import ProductList from 'components/shoppingList/ProductList'
-import { useEffect } from 'react'
+import { useEffect, useLayoutEffect, useState } from 'react'
+import useSWR from "swr"
 
 const ShoppingListDetail = ({id}) => {
 
     const { t } = useTranslation('shopping')
     const router = useRouter()
 
-    const { getShoppingListProducts } = useShoppingList()
-    const products = getShoppingListProducts(id)
+    
+    // useEffect(() => {
+        //     const fetchShoppingList = async () => {
+            //         const sl = await getShoppingListById(id)
+            //         setShoppingList(sl[0])
+            //     }
+            
+            //     fetchShoppingList().catch(console.error);        
+            //     }, [shoppingList])
+            
+    // const { getShoppingList } = useShoppingList()
+    // const { shoppingList, isLoading, isError } = getShoppingList(id)
 
+    const fetcher = (...args) => fetch(...args).then(res => res.json())
+    const { data, error } = useSWR(`/api/shoppingLists/${id}`, fetcher)
+
+    if(!data) return <p>Loading</p>
+    if (error) return <p>Error</p>
+    
     return (
-        <>
-             <Container fluid mb={20}>
+        <>          
+            <Container fluid mb={20}>
                 <Group direction='column' position='left'>
                 <Title order={1}>
                     {t("SHOPPING_LIST")} 
@@ -29,19 +46,17 @@ const ShoppingListDetail = ({id}) => {
             </Container>
             <Container fluid>
                 <div 
-                style={{ 
-                    display:"grid", 
-                    gridTemplateColumns: "repeat(auto-fill, minmax(400px, 1fr))",
-                    gap: "1rem",
-                    alignItems: "flex-start"
+                    style={{ 
+                        display:"grid", 
+                        gridTemplateColumns: "repeat(auto-fill, minmax(400px, 1fr))",
+                        gap: "1rem",
+                        alignItems: "flex-start"
                     }}
-                >        
-                {                        
-                    <ProductList products={products} />
-                }
+                >                                           
+                    <ProductList products={data.products} />
                 </div>
             </Container>
-    </>      
+        </>     
      );
 };
 

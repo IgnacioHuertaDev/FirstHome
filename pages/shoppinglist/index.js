@@ -16,7 +16,7 @@ export default function ShoppingLists({ shoppingListsFromDb }) {
   // const [ addExpenseModalBudgetId, handleAddExpenseModalBudgetId ] = useState()
   // const [ viewExpensesModalBudgetId, handleViewExpensesModalBudgetId ] = useState()
 
-  const { shoppingLists, setShoppingList, setProduct, getShoppingListProducts } = useShoppingList()
+  const { shoppingLists, setShoppingList } = useShoppingList()
 
   // const openAddExpenseModal = (budgetId) => {
   //   handleShowAddExpense(true)
@@ -25,7 +25,6 @@ export default function ShoppingLists({ shoppingListsFromDb }) {
 
   useEffect(() => {
     setShoppingList(shoppingListsFromDb)
-    setProduct(shoppingListsFromDb.products)
   },[shoppingLists]);
 
   return (
@@ -53,14 +52,13 @@ export default function ShoppingLists({ shoppingListsFromDb }) {
         >        
           {
             //List of Shopping Lists
-            shoppingLists.map(shoppingList => {
+            shoppingLists.map((shoppingList, index) => {
               {/* const amount = getShoppingListProducts(shoppingList.id).reduce((total, product) => total + product.price, 0) */}
-              const amount = 0
-
+              const amount = index
               return (
                 <ShoppingListCard
-                  key={shoppingList.id}
-                  shoppingListId={shoppingList.id}
+                  key={shoppingList._id}
+                  shoppingListId={shoppingList._id}
                   name={shoppingList.description}
                   date={shoppingList.date}
                   amount={amount}

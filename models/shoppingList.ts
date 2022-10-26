@@ -1,4 +1,4 @@
-import Products from './products'
+import Products from './product'
 
 type ShoppingLists = {
     _id: string,
