@@ -68,7 +68,7 @@ const ProductList = ({ products }) => {
 
   return (
     items.length === 0 ?
-      <Text className={classes.symbol}>Agregue un producto</Text>
+      <Text className={classes.symbol}>No hay productos disponibles</Text>
     :
     <DragDropContext
       onDragEnd={({ destination, source }) =>

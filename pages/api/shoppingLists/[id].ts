@@ -8,7 +8,7 @@ export default async (req: NextApiRequest, res: NextApiResponse<ShoppingList>) =
         const client = await clientPromise;
         const db = client.db("first_home");
         
-        const { method, body, query: { id }} = req
+        const { method, body, query: { id } } = req
 
         switch(method) {
             case 'GET':
