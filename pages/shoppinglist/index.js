@@ -6,6 +6,7 @@ import AddExpenseModal from 'components/AddExpenseModal';
 import ViewExpensesModal from 'components/ViewExpensesModal'
 import { useShoppingList } from 'context/ShoppingListContext'
 import useTranslation from 'next-translate/useTranslation'
+import clientPromise from "lib/mongodb";
 
 export default function ShoppingLists({ shoppingListsFromDb }) {
 
@@ -52,9 +53,10 @@ export default function ShoppingLists({ shoppingListsFromDb }) {
         >        
           {
             //List of Shopping Lists
-            shoppingLists.map((shoppingList, index) => {
-              {/* const amount = getShoppingListProducts(shoppingList.id).reduce((total, product) => total + product.price, 0) */}
-              const amount = index
+            shoppingLists.map((shoppingList) => {
+
+              const amount = shoppingList.products.reduce((total, product) => total + product.price, 0)
+              
               return (
                 <ShoppingListCard
                   key={shoppingList._id}
@@ -86,12 +88,20 @@ export default function ShoppingLists({ shoppingListsFromDb }) {
   )
 }
 
-//This gets called on every request
 export async function getServerSideProps() {
-  // Get all shopping lists
-  const shoppingListsRes = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/shoppingLists`)
-  const shoppingListsFromDb = await shoppingListsRes.json()
+  try {
+      const client = await clientPromise;
+      const db = client.db("first_home");
 
-  // Pass data to the page via props
-  return { props: { shoppingListsFromDb } }
+      const shoppingLists = await db
+        .collection("shoppingLists")
+        .find({})
+        .toArray();
+
+      return {
+          props: { shoppingListsFromDb: JSON.parse(JSON.stringify(shoppingLists)) },
+      };
+  } catch (e) {
+      console.error(e);
+  }
 }

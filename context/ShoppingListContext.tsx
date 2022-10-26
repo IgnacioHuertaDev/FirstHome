@@ -46,7 +46,7 @@ export const ShoppingListProvider : FC<ReactNode> = ({ children }) => {
 
     const addShoppingList = async ( description: string, date: Date ) => {
         try {            
-            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/shoppingLists`, {
+            const res = await fetch(`/api/shoppingLists`, {
                 method: 'POST',
                 body: JSON.stringify({ _id: uuidV4(), description, date}),
                 headers: { 'Content-Type': 'application/json' },
@@ -62,7 +62,7 @@ export const ShoppingListProvider : FC<ReactNode> = ({ children }) => {
 
     const addProduct = async (description: string, amount: number, price: number, shoppingListId: string) => {
         try {            
-            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/products`, {
+            const res = await fetch(`/api/products`, {
                 method: 'POST',
                 body: JSON.stringify({ _id: uuidV4(), description, amount, price, shoppingListId}),
                 headers: { 'Content-Type': 'application/json' },
@@ -87,7 +87,7 @@ export const ShoppingListProvider : FC<ReactNode> = ({ children }) => {
 
     const updateShoppingList = async (updatedShoppingList : ShoppingList) => {
         try {
-            await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/shoppingLists/${updatedShoppingList._id}`, {
+            await fetch(`/api/shoppingLists/${updatedShoppingList._id}`, {
                 method: 'PUT',
                 body: JSON.stringify(updatedShoppingList),
                 headers: {
